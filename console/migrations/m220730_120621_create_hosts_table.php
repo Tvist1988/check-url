@@ -12,8 +12,11 @@ class m220730_120621_create_hosts_table extends Migration
      */
     public function safeUp()
     {
-        $this->createTable('{{%hosts}}', [
+        $this->createTable('hosts', [
             'id' => $this->primaryKey(),
+            'url' => $this->string(128)->notNull(),
+            'interval' => $this->integer()->notNull(),
+            'repeat' => $this->integer()->notNull(),
         ]);
     }
 
@@ -22,6 +25,6 @@ class m220730_120621_create_hosts_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropTable('{{%hosts}}');
+        $this->dropTable('hosts');
     }
 }
