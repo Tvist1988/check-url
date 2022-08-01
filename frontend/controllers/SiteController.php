@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use common\models\Hosts;
+use app\service\CheckUrlService\CheckUrlService;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -75,7 +77,18 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $model = new Hosts();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $model->save();
+
+            return $this->render('confirm', [
+                'model' => $model,
+            ]);
+        }
+
+        return $this->render('index', [
+            'model' => $model,
+        ]);
     }
 
     /**
